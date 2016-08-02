@@ -1,0 +1,13 @@
+#Configuration for (unofficial) Bible Gateway Verse Of The Day
+
+
+#bibleversion: <id>
+#Either the numeric ID from https://www.biblegateway.com/usage/linking/versionslist/
+#Or text ID as seen in BibleGateway.com URLs. For example, if the URL contains "version=NIV", use "NIV" here.
+bibleversion: NIV
+
+#refresh: <hours>
+#Time between automatic refresh. This is in hours. Default is 24 because it's a daily verse.
+refresh: 24
+
+

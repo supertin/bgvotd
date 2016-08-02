@@ -1,0 +1,23 @@
+name: unofficialBibleGatewayVOTD
+main: com.gmail.supertin.unofficialbiblegatewayvotd.main
+version: 0.1
+commands:
+  votd:
+    description: Show current verse of the day.
+    usage: /votd
+  votdrefresh:
+    description: Refresh the verse of the day manually. This shouldn't be required normally.
+    usage: /votdrefresh
+    
+permissions:
+  votd.*:
+    description: Allow all votd commands - not recommended
+    children:
+      votd.votd: true
+      votd.votdrefresh: true
+  votd.votd:
+    description: Allow using "votd" to show current VOTD
+    default: true
+  votd.votdrefresh:
+    description: Allow manual refreshing of VOTD
+    default: op
