@@ -1,6 +1,6 @@
 name: unofficialBibleGatewayVOTD
 main: com.gmail.supertin.unofficialbiblegatewayvotd.main
-version: 0.1
+version: 0.2
 commands:
   votd:
     description: Show current verse of the day.

@@ -1,8 +1,8 @@
 package com.gmail.supertin.unofficialbiblegatewayvotd;
 
 
-import java.util.Timer;
-import java.util.TimerTask;
+//import java.util.Timer;
+//import java.util.TimerTask;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -15,6 +15,9 @@ public class main extends JavaPlugin {
 	public static String bibleversion; //This one is particularly bad... It's only checked in votdUpdate.
 	public static int refreshtime; 
 
+	/* The timer code is currently broken enough that it causes errors
+	 * 
+	 * Also commented out below is the "timer.schedule" line that enables the timer
 	// Set up a timer to auto-refresh the verse of the day.
 	Timer timer = new Timer();
 	TimerTask refreshVerse = new TimerTask() {
@@ -25,6 +28,7 @@ public class main extends JavaPlugin {
 		}
 	};
 
+*/
 
 	@Override
 	public void onEnable() {
@@ -34,7 +38,7 @@ public class main extends JavaPlugin {
 		refreshtime = this.getConfig().getInt("refresh");
 
 		// And now start the timed task (it will also run the task now due to the 0 value).
-		timer.schedule (refreshVerse, 0, 1000*60*60*refreshtime);  // 1000 milliseconds X 60 seconds X 60 minutes X 24 hours = 1 day
+//		timer.schedule (refreshVerse, 0, 1000*60*60*refreshtime);  // 1000 milliseconds X 60 seconds X 60 minutes X 24 hours = 1 day
 	}
 
 	@Override
@@ -49,9 +53,14 @@ public class main extends JavaPlugin {
 		case "votd":
 			//Check if the player has permission to get the current VOTD
 			if(sender.hasPermission("votd.votd")) {
-				//Player is allowed - send them the VOTD.
-				sender.sendMessage(ChatPaginator.wordWrap(verse, ChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH));
-				sender.sendMessage(reference);
+				if(verse != null) {
+					//Player is allowed - send them the VOTD.
+					sender.sendMessage(ChatPaginator.wordWrap(verse, ChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH));
+					sender.sendMessage(reference);
+				}
+				else {
+					sender.sendMessage("No VOTD available");
+				}
 			}
 			else {
 				//Player is denied VOTD access. This is NOT default!
