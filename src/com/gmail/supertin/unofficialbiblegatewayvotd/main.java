@@ -1,12 +1,11 @@
 package com.gmail.supertin.unofficialbiblegatewayvotd;
 
 
-//import java.util.Timer;
-//import java.util.TimerTask;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.ChatPaginator;
+import org.bukkit.scheduler.BukkitScheduler;
 
 public class main extends JavaPlugin {
 	//Various global values. Pretty sure this is not the right way to do this, but it works.
@@ -37,8 +36,14 @@ public class main extends JavaPlugin {
 		bibleversion = this.getConfig().getString("bibleversion");
 		refreshtime = this.getConfig().getInt("refresh");
 
-		// And now start the timed task (it will also run the task now due to the 0 value).
-//		timer.schedule (refreshVerse, 0, 1000*60*60*refreshtime);  // 1000 milliseconds X 60 seconds X 60 minutes X 24 hours = 1 day
+        BukkitScheduler scheduler = getServer().getScheduler();
+        scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
+        	@Override
+            public void run() {
+                // Do something
+        		votdUpdate.main();
+            }
+        }, 0L, 20*60*60*refreshtime); //20 ticks * 60 seconds * 60 minutes * refreshtime (default 24 hours)
 	}
 
 	@Override
