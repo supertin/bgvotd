@@ -37,10 +37,6 @@ public class votdUpdate {
 			main.verse = ReplaceSpecialChars(votd.get("text").getAsString()); //Set the main verse variable.
 			main.reference = votd.get("reference").getAsString(); //Set the verse reference (as in the book, chapter and verse number)
 
-			// Currently the verse is broadcast when it updates. Probably best to make this optional, but for now it's like this.
-			Bukkit.broadcastMessage(main.verse);
-			Bukkit.broadcastMessage(main.reference);
-
 		} catch (IOException e) {
 			//Something bad happened.
 			//Log an error... We can't be sure what happened, but it happened grabbing the JSON data

@@ -1,6 +1,7 @@
 package com.gmail.supertin.unofficialbiblegatewayvotd;
 
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -13,21 +14,7 @@ public class main extends JavaPlugin {
 	public static String reference;
 	public static String bibleversion; //This one is particularly bad... It's only checked in votdUpdate.
 	public static int refreshtime; 
-
-	/* The timer code is currently broken enough that it causes errors
-	 * 
-	 * Also commented out below is the "timer.schedule" line that enables the timer
-	// Set up a timer to auto-refresh the verse of the day.
-	Timer timer = new Timer();
-	TimerTask refreshVerse = new TimerTask() {
-		@Override
-		public void run () {
-			// This is the code that will run on the timer
-			votdUpdate.main();
-		}
-	};
-
-*/
+	public static int broadcasttime;
 
 	@Override
 	public void onEnable() {
@@ -35,20 +22,35 @@ public class main extends JavaPlugin {
 		this.saveDefaultConfig();
 		bibleversion = this.getConfig().getString("bibleversion");
 		refreshtime = this.getConfig().getInt("refresh");
+		broadcasttime = this.getConfig().getInt("broadcast");
 
-        BukkitScheduler scheduler = getServer().getScheduler();
-        scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
+		// Scheduler for refreshing the verse.
+        BukkitScheduler refreshScheduler = getServer().getScheduler();
+        refreshScheduler.scheduleSyncRepeatingTask(this, new Runnable() {
         	@Override
             public void run() {
-                // Do something
-        		votdUpdate.main();
-            }
-        }, 0L, 20*60*60*refreshtime); //20 ticks * 60 seconds * 60 minutes * refreshtime (default 24 hours)
+        		votdUpdate.main(); }
+        	}, 0L, 20*60*60*refreshtime); //20 ticks * 60 seconds * 60 minutes * refreshtime (default 24 hours)
+        
+        // Scheduler for broadcasting the verse via chat.
+        if(broadcasttime > 0) {
+        	Bukkit.getLogger().info("Broadcasting verse every " + broadcasttime + "minutes.");
+	        BukkitScheduler broadcastScheduler = getServer().getScheduler();
+	        broadcastScheduler.scheduleSyncRepeatingTask(this, new Runnable() {
+	        	@Override
+	        	public void run() {
+	        		// Broadcast the verse to all players.
+	    			Bukkit.broadcastMessage(main.verse);
+	    			Bukkit.broadcastMessage(main.reference);
+	
+	        	}
+	        }, 0L, 20*60*broadcasttime);
+		}
 	}
 
 	@Override
 	public void onDisable() {
-		// This plugin doesn't handle being disabled.
+		// This plugin currently doesn't handle being disabled.
 	}
 
 	// Handler for commands
