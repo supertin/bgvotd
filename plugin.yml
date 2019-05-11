@@ -1,6 +1,6 @@
 name: unofficialBibleGatewayVOTD
 main: com.gmail.supertin.unofficialbiblegatewayvotd.main
-version: 0.2
+version: 0.2.1
 api-version: 1.14
 commands:
   votd:

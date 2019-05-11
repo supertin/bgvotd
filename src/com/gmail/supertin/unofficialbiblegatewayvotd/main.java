@@ -34,7 +34,7 @@ public class main extends JavaPlugin {
         
         // Scheduler for broadcasting the verse via chat.
         if(broadcasttime > 0) {
-        	Bukkit.getLogger().info("Broadcasting verse every " + broadcasttime + "minutes.");
+        	Bukkit.getLogger().info("Broadcasting verse every " + broadcasttime + " minutes.");
 	        BukkitScheduler broadcastScheduler = getServer().getScheduler();
 	        broadcastScheduler.scheduleSyncRepeatingTask(this, new Runnable() {
 	        	@Override
